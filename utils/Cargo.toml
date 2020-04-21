@@ -1,0 +1,12 @@
+[package]
+name = "utils"
+version = "0.1.0"
+authors = ["yimu"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = "1.0.106"
+bincode = "1.2.1"
+
