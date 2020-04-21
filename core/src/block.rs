@@ -37,6 +37,7 @@ impl Block {
             hash: "".to_string(),
             data,
         };
+        block.set_hash();
         block
     }
 }

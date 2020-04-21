@@ -1,5 +1,4 @@
 use crate::block;
-use std::hash::Hash;
 use crate::block::Block;
 
 pub struct Blockchain {
