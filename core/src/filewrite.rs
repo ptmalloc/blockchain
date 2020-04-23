@@ -42,6 +42,9 @@ pub fn Fileread() -> Blockchain{
     bc
 }
 
+
+
+
 //将区块序列化保存在文件中
 pub fn Blockwrite(bc: &Blockchain) {
     let Blocks_length = bc.blocks.len();

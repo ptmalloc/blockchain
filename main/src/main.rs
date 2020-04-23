@@ -7,24 +7,34 @@ fn main() {
     let mut bc = blockchain::Blockchain::new_blockchain();
 
     bc.add_block("a -> b : 5btc".to_string());
-    //thread::sleep(Duration::from_secs(5));
+    thread::sleep(Duration::from_secs(5));
+    bc.add_block("c -> d : 5btc".to_string());
     bc.add_block("c -> d : 5btc".to_string());
 
-    /*filewrite::Filewrite(&bc);
-    let bc1 = filewrite::Fileread();
-    for b in bc1.blocks {
-        println!("++++++++++++++++++++++");
-        println!("{:#?}", b);
-        println!(" ");
-    }*/
     /*for b in bc.blocks{
         println!("++++++++++++++++++++++");
         println!("{:#?}", b);
         println!("");
     }*/
 
+    /*filewrite::Filewrite(&bc);
+
+    let bc1 = filewrite::Fileread();
+    for b in bc1.blocks {
+        println!("++++++++++++++++++++++");
+        println!("{:#?}", b);
+        println!(" ");
+    }*/
+
+
     filewrite::Blockwrite(&bc);
-    let temp: i32 = 1;
+
+
+    let temp = 1;
     filewrite::Blockread(temp);
-    println!("Hello, world!");
+    // println!("Hello, world!");
+
+
+
+
 }

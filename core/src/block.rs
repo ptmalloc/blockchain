@@ -4,37 +4,41 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, PartialEq, Eq,Debug)]
 pub struct BlockHeader {
+    pub version: u32,
+    pub prevBlockHash: String,
+    pub merkleRoot: String,
     pub time: i64,
-    pub tx_hash: String, //交易数据的hash
-    pub pre_hash: String,
+    pub difficultyTarget: u32,
+    pub nonce: u32,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Eq,Debug)]
 pub struct Block {
     pub header: BlockHeader,
-    pub hash: String,
     pub data: String, //交易数据
 }
 
 impl Block {
     fn set_hash(&mut self){
-
-        let header = coder::my_serialize(&(self.header));
-        self.hash = coder::get_hash(&header[..]);
+        let header = coder::my_serialize(&(self.data));
+        self.header.merkleRoot = coder::get_hash(&header[..]);
     }
 
-    pub fn new_block(data: String, pre_hash: String) -> Block {
-        let transactions = coder::my_serialize(&data);
-        let tx_hash = coder::get_hash(&transactions[..]);
-
+    pub fn new_block(data: String, prevBlockHash: String) -> Block {
+        let version = 1;
+        let merkleRoot = String::new();
         let time = Utc::now().timestamp();
+        let difficultyTarget = 1;
+        let nonce = 1;
         let mut block = Block{
             header: BlockHeader{
+                version,
+                prevBlockHash, //交易数据的hash
+                merkleRoot,
                 time,
-                tx_hash, //交易数据的hash
-                pre_hash,
+                difficultyTarget,
+                nonce,
             },
-            hash: "".to_string(),
             data,
         };
         block.set_hash();

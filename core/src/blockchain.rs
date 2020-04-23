@@ -1,5 +1,6 @@
 use crate::block;
 use crate::block::Block;
+use utils::coder;
 use serde::{Deserialize, Serialize};
 
 
@@ -10,8 +11,13 @@ pub struct Blockchain {
 
 impl Blockchain{
     pub fn add_block(&mut self, data: String){
+
+        //对前一个区块头做hash
         let pre_block = &self.blocks[self.blocks.len() -1];
-        let new_block = block::Block::new_block(data, pre_block.hash.clone());
+        let pre_hash_se = coder::my_serialize(&pre_block.header);
+        let pre_hash = coder::get_hash(&pre_hash_se[..]);
+
+        let new_block = block::Block::new_block(data, pre_hash.clone());
         self.blocks.push(new_block);
 
     }
