@@ -10,18 +10,21 @@ fn main() {
     //thread::sleep(Duration::from_secs(5));
     bc.add_block("c -> d : 5btc".to_string());
 
-    filewrite::Filewrite(&bc);
+    /*filewrite::Filewrite(&bc);
     let bc1 = filewrite::Fileread();
     for b in bc1.blocks {
         println!("++++++++++++++++++++++");
         println!("{:#?}", b);
         println!(" ");
-    }
+    }*/
     /*for b in bc.blocks{
         println!("++++++++++++++++++++++");
         println!("{:#?}", b);
         println!("");
     }*/
 
+    filewrite::Blockwrite(&bc);
+    let temp: i32 = 1;
+    filewrite::Blockread(temp);
     println!("Hello, world!");
 }

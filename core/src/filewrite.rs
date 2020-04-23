@@ -1,7 +1,8 @@
 use std::io::prelude::*;
 use std::fs::File;
-use crate::blockchain::Blockchain;
+use crate::blockchain::*;
 use utils::coder;
+use crate::block::*;
 
 pub fn Filewrite(bc: &Blockchain) {
     //let Blockchain_length = bc.blocks.len().to_string();
@@ -39,4 +40,34 @@ pub fn Fileread() -> Blockchain{
     let bc: Blockchain = coder::my_deserialize(&buffer);
     println!("{}", bc.blocks.len());
     bc
+}
+
+//将区块序列化保存在文件中
+pub fn Blockwrite(bc: &Blockchain) {
+    let Blocks_length = bc.blocks.len();
+    let mut x= 0;
+
+    let bciter = bc.blocks.iter();
+    for b in bciter{
+        let filename = String::from("Database\\") + x.to_string().as_str();
+        let mut file = File::create(filename).unwrap();
+        x = x+1;
+        let bx = coder::my_serialize(&b);
+        file.write(&bx[..]).expect("write failed");
+    }
+    let filename = String::from("Database\\") + String::from("length").as_str();
+    let mut file = File::create(filename).unwrap();
+    let content = Blocks_length.to_string();
+    file.write(content.as_bytes()).expect("write failed");
+}
+
+
+//从文件中读取区块的信息
+pub fn Blockread(x: i32) {
+    let filename = String::from("Database\\") + x.to_string().as_str();
+    let mut f = File::open(filename).expect("write failed");
+    let mut buffer = Vec::new();
+    f.read_to_end(&mut buffer);
+    let b: Block = coder::my_deserialize(&buffer);
+    println!("{:#?}", b);
 }
