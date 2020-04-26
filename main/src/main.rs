@@ -36,7 +36,7 @@ fn main() {
 
     //netrpc::connect_send_length();
     //netrpc::send_data(1);
-    let x= netrpc::connect_recv_length();
-    println!("{}", x);
-
+    // let x= netrpc::connect_recv_length();
+    // println!("{}", x);
+    netrpc::connect_update();
 }

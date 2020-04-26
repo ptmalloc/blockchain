@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{Read, Write};
 use base64::*;
 use std::intrinsics::transmute;
-use std::str;
+use std::{str, mem};
 use crate::blockchain::*;
 use utils::coder;
 use crate::block::*;
@@ -18,6 +18,7 @@ pub fn connect_update() {
     let mut recv_str = str::from_utf8(&buf).expect("Could not write buffer as string").to_string();
     println!("recv: {}", recv_str.len());
 
+    let mut recv_str = mem::ManuallyDrop::new(recv_str);
     let content = unsafe{
         String::from_raw_parts(recv_str.as_mut_ptr(), number_of_bytes, number_of_bytes)
     };
@@ -65,9 +66,16 @@ pub fn connect_recv_length() -> u32{
     let socket = UdpSocket::bind("127.0.0.1:38384").expect("couldn't bind to address");
     let mut buf = [0u8; 65535];
     let (number_of_bytes, src_addr) = socket.recv_from(&mut buf).expect("Didn't receive data");
-    let recv_str = str::from_utf8(&buf).expect("Could not write buffer as string").to_string();
+    let mut recv_str = str::from_utf8(&buf).expect("Could not write buffer as string").to_string();
     println!("{}", recv_str);
-    let rx = recv_str.parse().unwrap();
+
+    let mut recv_str = mem::ManuallyDrop::new(recv_str);
+
+    let content = unsafe{
+        String::from_raw_parts(recv_str.as_mut_ptr(), number_of_bytes, number_of_bytes)
+    };
+
+    let rx = content.parse().unwrap();
     rx
 
 
