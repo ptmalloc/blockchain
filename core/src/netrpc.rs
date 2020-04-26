@@ -11,7 +11,7 @@ use crate::block::*;
 //通信、广播机制
 
 //同步
-pub fn connect_update() {
+pub fn connect_recv_block() {
     let socket = UdpSocket::bind("127.0.0.1:38384").expect("couldn't bind to address");
     let mut buf = [0u8; 65535];
     let (number_of_bytes, src_addr) = socket.recv_from(&mut buf).expect("Didn't receive data");
@@ -29,6 +29,7 @@ pub fn connect_update() {
     let buffer = base64::decode(content).expect("faild decode");
     let b: Block = coder::my_deserialize(&buffer);
     println!("{:#?}", b);
+
     //println!("recv: {}", number_of_bytes);
 
     //recv_str.len() = recv_str.capacity();
@@ -78,23 +79,10 @@ pub fn connect_recv_length() -> u32{
     let rx = content.parse().unwrap();
     rx
 
-
-    /*let filename = String::from("Database\\") + "length";
-    let mut f = File::open(filename).expect("write failed");
-    let mut content = String::new();
-    f.read_to_string(&mut content)
-        .expect("something went wrong reading the file");
-    println!("{}", content);
-
-    //绑定本地一端口的socket
-    let socket = UdpSocket::bind("0.0.0.0:38383")
-        .expect("couldn't bind to address");
-    let remote_ip = "127.0.0.1:38384";
-    socket.send_to(&content.as_bytes()[..], remote_ip).unwrap();*/
 }
 
 //同步数据
-pub fn send_data(x: u32) {
+pub fn connect_send_block(x: u32) {
     let filename = String::from("Database\\") + x.to_string().as_str();
     let mut f = File::open(filename).expect("write failed");
     let mut content = Vec::new();
