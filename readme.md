@@ -6,15 +6,9 @@ IDE: Clion
 开发语言: Rust (rustc 1.42.0)   
 ```
 
-2020/4/22  
-* /core/src/netrpc.rs 有关节点的通信广播部分 
-* /core/src/filewrite.rs 数据的导出、导入
+## 程序说明
 
-1. 使用cargo创建main、core(lib)、utils(lib)  
-2. 库依赖均在相应的Cargo.toml中,正常情况下单机run,程序会默认下载对应相应库(库的版本号已给出)  
-
-
-
+### block结构
 ```
 区块头共80字节，分为6个部分：version，prevBlockHash，merkleRoot，time difficultyTarget，nonce。
 version：大小为4字节，记录了区块头的版本号，用于跟踪软件/协议的更新；
@@ -30,3 +24,15 @@ numTransactionsBytes：大小为1字节，记录了交易数量占用的字节�
 numTransactions：大小为0-8个字节，记录了区块内的交易数量；
 transactions：大小不确定，记录了区块内存的多个交易数据。
 ```
+
+### 部分源程序功能
+* /core/src/netrpc.rs 有关节点的通信广播部分 
+* /core/src/filewrite.rs 数据的导出、导入
+
+
+### 运行所需的包和库
+1. 使用cargo创建main、core(lib)、utils(lib)  
+2. 库依赖均在相应的Cargo.toml中,正常情况下单机run,程序会默认下载对应相应库(库的版本号已给出)  
+
+### 说明
+Rust新手，写出的代码质量为了课程作业比较垃圾，勿喷
