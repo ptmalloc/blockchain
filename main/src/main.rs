@@ -7,7 +7,7 @@ fn main() {
     let mut bc = blockchain::Blockchain::new_blockchain();
 
     bc.add_block("a -> b : 5btc".to_string());
-    thread::sleep(Duration::from_secs(5));
+    //thread::sleep(Duration::from_secs(5));
     bc.add_block("c -> d : 5btc".to_string());
     bc.add_block("c -> d : 5btc".to_string());
 
@@ -29,12 +29,14 @@ fn main() {
 
     filewrite::Blockwrite(&bc);
 
-
+    //测试读取第一个区块
     let temp = 1;
     filewrite::Blockread(temp);
     // println!("Hello, world!");
 
-
-
+    //netrpc::connect_send_length();
+    //netrpc::send_data(1);
+    let x= netrpc::connect_recv_length();
+    println!("{}", x);
 
 }
