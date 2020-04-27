@@ -47,6 +47,27 @@ pub fn connect_recv_block() {
 
 }
 
+//同步数据
+pub fn connect_send_block(x: u32) {
+    let filename = String::from("Database\\") + x.to_string().as_str();
+    let mut f = File::open(filename).expect("write failed");
+    let mut content = Vec::new();
+    f.read_to_end(&mut content)
+        .expect("something went wrong reading the file");
+
+    let b64_content = base64::encode(content.clone());
+
+    println!("{}", b64_content);
+
+    //绑定本地一端口的socket
+    let socket = UdpSocket::bind("0.0.0.0:38383")
+        .expect("couldn't bind to address");
+    let remote_ip = "127.0.0.1:38384";
+    socket.send_to(b64_content.as_bytes(), remote_ip)
+        .expect("couldn't send data");
+}
+
+
 //发布
 pub fn connect_send_length(){
     let filename = String::from("Database\\") + "length";
@@ -81,22 +102,13 @@ pub fn connect_recv_length() -> u32{
 
 }
 
-//同步数据
-pub fn connect_send_block(x: u32) {
-    let filename = String::from("Database\\") + x.to_string().as_str();
+
+
+pub fn get_local_length() -> u32{
+    let filename = String::from("Database\\") + "length";
     let mut f = File::open(filename).expect("write failed");
-    let mut content = Vec::new();
-    f.read_to_end(&mut content)
+    let mut content = String::new();
+    f.read_to_string(&mut content)
         .expect("something went wrong reading the file");
-
-    let b64_content = base64::encode(content.clone());
-
-    println!("{}", b64_content);
-
-    //绑定本地一端口的socket
-    let socket = UdpSocket::bind("0.0.0.0:38383")
-        .expect("couldn't bind to address");
-    let remote_ip = "127.0.0.1:38384";
-    socket.send_to(b64_content.as_bytes(), remote_ip)
-         .expect("couldn't send data");
+    content.parse().unwrap()
 }
