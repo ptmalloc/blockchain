@@ -8,7 +8,7 @@ IDE: Clion
 
 ## 程序说明
 
-### 参考的block结构
+### 参考的block结构（自己查看）
 ```
 区块头共80字节，分为6个部分：version，prevBlockHash，merkleRoot，time difficultyTarget，nonce。
 version：大小为4字节，记录了区块头的版本号，用于跟踪软件/协议的更新；
@@ -26,23 +26,29 @@ transactions：大小不确定，记录了区块内存的多个交易数据。
 ```
 区块头部分保留，区块链内的部分简化为data 
 
+### 实现的功能
+* 区块的生成
+* 区块信息的数据保存
+* 区块信息的传输同步
 
-### 部分源程序功能
+### 运行所需的包和库
+1. 使用cargo创建main、core(lib)、utils(lib)  
+2. 库依赖均在相应的Cargo.toml中,正常情况下直接输入命令cargo run,程序会默认下载对应相应库(库的版本号已给出)并运行  
+
+### 程序逻辑说明
+* /main/src/main.rs 文件包含了程序测试的主要代码，其中包含区块链的生成测试，区块链信息写入文件的测试，还有Server和client模拟测试
+* /core/src/filewrite.rs 将区块链的每一块序列化存入文件中
+* /core/src/netrpc.rs 其中有大量的冗余代码（在编写过程的初期逻辑）。已server和client的方式通过udp传输传递区块信息。
 * /core/src/block.rs 定义了区块的数据结构
 * /core/src/blockchain.rs 定义了区块链的数据结构，和初始化化部分代码
 * /core/src/filewrite.rs 数据的导出、导入在Database目录下
 * /utils/src/coders.rs 区块的序列化和反序列化
 
-### 实现的功能
-* 区块的生成
-* 区块信息的数据保存
-
-### 运行所需的包和库
-1. 使用cargo创建main、core(lib)、utils(lib)  
-2. 库依赖均在相应的Cargo.toml中,正常情况下cargo run,程序会默认下载对应相应库(库的版本号已给出)  
+### 项目过程参考
+参看项目与视频: https://www.bilibili.com/video/BV145411t7qp  
+相比于该视频中的项目，个人的课程作业项目修改了区块链的结构，添加了区块链信息的文件保存以及模拟区块链中的通信功能。
 
 ## 说明
 Rust新手，写出的代码质量为了课程作业比较垃圾，勿喷
+项目地址: https://github.com/ptmalloc/blockchain
 
-## 后续工作2020/05/10
-把用udp通信全部换成post和get请求
