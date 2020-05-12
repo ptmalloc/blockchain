@@ -52,6 +52,5 @@ transactions：大小不确定，记录了区块内存的多个交易数据。
 Rust新手，写出的代码质量为了课程作业比较垃圾，勿喷  
 项目地址: https://github.com/ptmalloc/blockchain
 
-学号: E41714024   
-姓名: 杨旭
+
 
