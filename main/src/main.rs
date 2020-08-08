@@ -39,8 +39,8 @@ fn main() {
 
 
     //Server测试
-    server_info();
-    server_recv_block();
+    // server_info();
+    // server_recv_block();
 
     //Client测试
     // println!("client: {}", get_local_length());
